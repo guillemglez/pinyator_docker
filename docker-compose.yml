@@ -1,0 +1,14 @@
+services:
+  pinyator:
+    build:
+      context: "./pinyator/"
+    restart: unless-stopped
+    ports:
+      - 14242:80
+    volumes:
+      - "pinyator-db:/db"
+    env_file:
+      - .env
+
+volumes:
+  pinyator-db:
