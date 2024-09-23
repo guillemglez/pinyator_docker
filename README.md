@@ -16,5 +16,5 @@ $ docker-compose up -d
 ```
 
 ## To-Do list
-[ ] Separate all the variables to a file for easier configuration
-[ ] Improve README.md
+- [ ] Separate all the variables to a file for easier configuration
+- [ ] Improve README.md
