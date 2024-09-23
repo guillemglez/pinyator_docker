@@ -1,14 +1,37 @@
+version: '3.8'
+
 services:
-  pinyator:
-    build:
-      context: "./pinyator/"
-    restart: unless-stopped
-    ports:
-      - 14242:80
+  pinyator-db:
+    image: mysql:5.7
+    container_name: pinyator-db
+    user: root
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password # Replace with a strong root password
+      MYSQL_DATABASE: pinyator
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: mysql_password  # Replace with a strong password
     volumes:
-      - "pinyator-db:/db"
-    env_file:
-      - .env
+      - pinyator-db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  pinyator-web:
+    build: .
+    container_name: pinyator-web
+    #stdin_open: true # Uncomment for debugging purposes
+    #tty: true        
+    user: root
+    depends_on:
+      - pinyator-db
+    environment:
+      MYSQL_HOST: pinyator-db
+      MYSQL_DATABASE: pinyator
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: mysql_password  # Replace with a strong password
+    ports:
+      - "8000:80"
 
 volumes:
-  pinyator-db:
+  pinyator-db-data:
+
