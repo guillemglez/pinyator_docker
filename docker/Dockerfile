@@ -29,7 +29,6 @@ RUN sed -i 's|datadir.*|datadir = /db|' /etc/mysql/mariadb.conf.d/50-server.cnf
 # Prevent MariaDB from trying to start during the Docker build process
 RUN echo '[mysqld]' > /etc/mysql/my.cnf \
     && echo 'skip-host-cache' >> /etc/mysql/my.cnf \
-    && echo 'skip-name-resolve' >> /etc/mysql/my.cnf \
     && echo 'bind-address = 127.0.0.1' >> /etc/mysql/my.cnf
 
 # Clone the repository into the container

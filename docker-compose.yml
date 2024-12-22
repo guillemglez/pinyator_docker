@@ -13,6 +13,7 @@ services:
       - 14242:80
     volumes:
       - "pinyator-db:/db"
+      - "./pinyator:/var/www/html/pinyator"
     env_file:
       - .env
 
