@@ -1,0 +1,3 @@
+[submodule "pinyator"]
+	path = pinyator
+	url = git@github.com:guillemglez/Pinyator.git
