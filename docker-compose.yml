@@ -2,6 +2,11 @@ services:
   pinyator:
     build:
       context: "./pinyator/"
+      args:
+        - MYSQL_ROOT_PASSWORD
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_DATABASE
     restart: unless-stopped
     ports:
       - 14242:80
