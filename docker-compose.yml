@@ -1,7 +1,8 @@
 services:
   pinyator:
     build:
-      context: "./pinyator/"
+      context: .
+      dockerfile: ./docker/Dockerfile
       args:
         - MYSQL_ROOT_PASSWORD
         - MYSQL_USER

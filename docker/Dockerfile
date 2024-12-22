@@ -1,5 +1,5 @@
 # Use an official PHP runtime as a parent image
-FROM php:7.2-apache
+FROM php:8.2-apache
 
 # Set build arguments for repository URL
 ARG REPO_URL=https://github.com/guillemglez/Pinyator
@@ -33,7 +33,7 @@ RUN echo '[mysqld]' > /etc/mysql/my.cnf \
     && echo 'bind-address = 127.0.0.1' >> /etc/mysql/my.cnf
 
 # Clone the repository into the container
-RUN git clone ${REPO_URL} /var/www/html/pinyator
+COPY ./pinyator /var/www/html/pinyator
 
 # Modify the Connexio.php file to use environment variables
 RUN sed -i "s/'user'/'${MYSQL_USER}'/" /var/www/html/pinyator/Connexio.php \
@@ -44,7 +44,7 @@ RUN sed -i "s/'user'/'${MYSQL_USER}'/" /var/www/html/pinyator/Connexio.php \
 WORKDIR /var/www/html/pinyator
 
 # Copy the entrypoint script
-COPY entrypoint.sh /usr/local/bin/
+COPY docker/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Use the entrypoint script

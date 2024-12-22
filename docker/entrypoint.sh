@@ -14,13 +14,13 @@ mysqld_safe --datadir=/db &
 sleep 5
 
 # Check if the database exists, if not, create it
-if ! mysql -u root -p"pinyator" -e "USE pinyator"; then
-  echo "Creating database pinyator..."
-  mysql -u root -p"pinyator" -e "CREATE DATABASE IF NOT EXISTS pinyator;"
-  mysql -u root -p"pinyator" -e "GRANT ALL PRIVILEGES ON pinyator.* TO 'pinyator'@'localhost' IDENTIFIED BY 'pinyator';"
+if ! mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "USE ${MYSQL_DATABASE}"; then
+  echo "Creating database ${MYSQL_DATABASE}..."
+  mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+  mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';"
   echo "Loading initial data..."
-  mysql -u root -p"pinyator" 'pinyator' </var/www/html/pinyator/Pinyator_BD.sql
+  mysql -u root -p"${MYSQL_ROOT_PASSWORD}" ${MYSQL_DATABASE} </var/www/html/pinyator/Pinyator_BD.sql
 fi
 
 # Start Apache in the foreground
-exec apache2-foregrounSELECT user,authentication_string,plugin,host FROM mysql.user
+exec apache2-foreground
