@@ -1,5 +1,5 @@
 # Use an official PHP runtime as a parent image
-FROM php:8.2-apache
+FROM php:7.2-apache
 
 # Set build arguments for repository URL
 ARG REPO_URL=https://github.com/guillemglez/Pinyator
@@ -30,8 +30,7 @@ RUN sed -i 's|datadir.*|datadir = /db|' /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN echo '[mysqld]' > /etc/mysql/my.cnf \
     && echo 'skip-host-cache' >> /etc/mysql/my.cnf \
     && echo 'skip-name-resolve' >> /etc/mysql/my.cnf \
-    && echo 'skip-networking' >> /etc/mysql/my.cnf \
-    && echo 'skip-slave-start' >> /etc/mysql/my.cnf
+    && echo 'bind-address = 127.0.0.1' >> /etc/mysql/my.cnf
 
 # Clone the repository into the container
 RUN git clone ${REPO_URL} /var/www/html/pinyator
