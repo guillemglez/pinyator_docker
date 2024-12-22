@@ -34,11 +34,6 @@ RUN echo '[mysqld]' > /etc/mysql/my.cnf \
 # Clone the repository into the container
 COPY ./pinyator /var/www/html/pinyator
 
-# Modify the Connexio.php file to use environment variables
-RUN sed -i "s/'user'/'${MYSQL_USER}'/" /var/www/html/pinyator/Connexio.php \
-    && sed -i "s/'password'/'${MYSQL_PASSWORD}'/" /var/www/html/pinyator/Connexio.php \
-    && sed -i "s/'pinyator'/'${MYSQL_DATABASE}'/" /var/www/html/pinyator/Connexio.php
-
 # Set the working directory
 WORKDIR /var/www/html/pinyator
 
