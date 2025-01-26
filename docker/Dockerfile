@@ -29,23 +29,16 @@ RUN sed -i 's|datadir.*|datadir = /db|' /etc/mysql/mariadb.conf.d/50-server.cnf
 # Prevent MariaDB from trying to start during the Docker build process
 RUN echo '[mysqld]' > /etc/mysql/my.cnf \
     && echo 'skip-host-cache' >> /etc/mysql/my.cnf \
-    && echo 'skip-name-resolve' >> /etc/mysql/my.cnf \
-    && echo 'skip-networking' >> /etc/mysql/my.cnf \
-    && echo 'skip-slave-start' >> /etc/mysql/my.cnf
+    && echo 'bind-address = 127.0.0.1' >> /etc/mysql/my.cnf
 
 # Clone the repository into the container
-RUN git clone ${REPO_URL} /var/www/html/pinyator
-
-# Modify the Connexio.php file to use environment variables
-RUN sed -i "s/'user'/'${MYSQL_USER}'/" /var/www/html/pinyator/Connexio.php \
-    && sed -i "s/'password'/'${MYSQL_PASSWORD}'/" /var/www/html/pinyator/Connexio.php \
-    && sed -i "s/'pinyator'/'${MYSQL_DATABASE}'/" /var/www/html/pinyator/Connexio.php
+COPY ./pinyator /var/www/html/pinyator
 
 # Set the working directory
 WORKDIR /var/www/html/pinyator
 
 # Copy the entrypoint script
-COPY entrypoint.sh /usr/local/bin/
+COPY docker/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Use the entrypoint script
