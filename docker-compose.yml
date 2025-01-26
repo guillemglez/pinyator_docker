@@ -11,9 +11,10 @@ services:
     restart: unless-stopped
     ports:
       - 14242:80
+      # - 3306:3306
     volumes:
       - "pinyator-db:/db"
-      - "./pinyator:/var/www/html/pinyator"
+      # - "./pinyator:/var/www/html/pinyator"
     env_file:
       - .env
 
