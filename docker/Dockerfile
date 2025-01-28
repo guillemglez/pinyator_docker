@@ -26,10 +26,7 @@ RUN mkdir -p /db && chown -R mysql:mysql /db
 # Configure MariaDB to use the /db directory for storage
 RUN sed -i 's|datadir.*|datadir = /db|' /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# Prevent MariaDB from trying to start during the Docker build process
-RUN echo '[mysqld]' > /etc/mysql/my.cnf \
-    && echo 'skip-host-cache' >> /etc/mysql/my.cnf \
-    && echo 'bind-address = 127.0.0.1' >> /etc/mysql/my.cnf
+COPY ./docker/my.cnf /etc/mysql/my.cnf
 
 # Clone the repository into the container
 COPY ./pinyator /var/www/html/pinyator
