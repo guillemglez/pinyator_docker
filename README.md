@@ -1,3 +1,3 @@
 # Pinyator on Docker
 
-See https://github.com/guillemglez/Pinyator
+Not suitable for production environments!

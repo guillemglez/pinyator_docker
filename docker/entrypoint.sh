@@ -22,5 +22,9 @@ if ! mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "USE ${MYSQL_DATABASE}"; then
   mysql -u root -p"${MYSQL_ROOT_PASSWORD}" ${MYSQL_DATABASE} </var/www/html/pinyator/Pinyator_BD.sql
 fi
 
+# Allow access to MYSQL_USER from any IP
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"
+
 # Start Apache in the foreground
 exec apache2-foreground
